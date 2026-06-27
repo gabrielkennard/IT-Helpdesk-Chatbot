@@ -1,0 +1,89 @@
+Q: How do I reset my password?
+A: Go to the login page and click "Forgot Password". Enter your employee email address and you will receive a reset link within 5 minutes. If you do not receive the email, check your spam folder or contact IT at it-support@company.com.
+
+Q: I can't connect to the VPN. What should I do?
+A: First, ensure you have the latest version of the VPN client installed. Try disconnecting and reconnecting. If the issue persists, restart your computer and try again. Make sure your internet connection is working. If none of these steps work, submit a ticket to the IT helpdesk.
+
+Q: How do I request access to a new software or system?
+A: Submit a software access request through the IT portal at it-portal.company.com. Select "New Access Request", fill in the system name, business justification, and your manager's approval. Requests are usually processed within 2 business days.
+
+Q: My computer is running slow. What can I do?
+A: Try restarting your computer first. Clear your browser cache and close unused applications. Check for Windows updates and install any pending ones. If the issue continues after 24 hours, contact IT helpdesk for a diagnostic check.
+
+Q: How do I set up multi-factor authentication (MFA)?
+A: Download the Microsoft Authenticator app on your mobile phone. Go to myaccount.microsoft.com and navigate to Security Info. Click "Add method" and select "Authenticator app". Follow the on-screen instructions to scan the QR code.
+
+Q: I accidentally deleted an important file. Can it be recovered?
+A: If the file was on your local drive, check the Recycle Bin first. If it was on a network share or SharePoint, IT can restore it from backup within 30 days. Submit an urgent ticket with the file name, location, and date it was deleted.
+
+Q: How do I connect to the office printer?
+A: Go to Settings > Printers & Scanners > Add a printer. If on the office network, printers should appear automatically. If not, ask IT for the printer's IP address and add it manually. For remote work, use the VPN first before connecting to office printers.
+
+Q: What is the process for onboarding a new employee?
+A: The hiring manager must submit a New Employee IT Request form at least 3 business days before the start date. IT will provision an email account, laptop, system accesses, and an MFA token. Equipment will be ready on the first day of employment.
+
+Q: How do I access the company intranet from home?
+A: Connect to the VPN first using your employee credentials. Once connected, navigate to intranet.company.com in your browser. Use your usual employee login details. Ensure your VPN client is up to date for the best experience.
+
+Q: My email is not syncing on my phone. How do I fix this?
+A: Go to your phone's email settings and remove the company email account. Re-add it using Microsoft Exchange or Outlook. Use your full email address as the username and ensure the server address is mail.company.com. Contact IT if you need help with Exchange server settings.
+
+Q: How do I request a new laptop or hardware upgrade?
+A: Submit a hardware request through the IT portal. Provide your current device details, reason for upgrade, and manager approval. Hardware requests are reviewed quarterly unless it is an urgent replacement due to device failure.
+
+Q: What should I do if I suspect a phishing email?
+A: Do not click any links or download attachments. Forward the email as an attachment to security@company.com. Then delete the email from your inbox. If you accidentally clicked a link, immediately disconnect from the network and call IT at ext. 5555.
+
+Q: How do I install software on my work computer?
+A: Most approved software can be installed via the Company Software Center application on your desktop. Search for the software and click Install. If the software is not listed, submit a software request through the IT portal with business justification and manager approval.
+
+Q: My monitor is not working or not detected. What do I do?
+A: First check that all cables are securely connected to both the monitor and the computer. Try a different cable or port if available. Restart the computer with the monitor plugged in. If the problem continues, raise a hardware ticket with IT helpdesk.
+
+Q: How do I set up a new email signature?
+A: Open Outlook and go to File > Options > Mail > Signatures. Click New to create a signature, type your details following the company template, and set it as default for new messages and replies. The official company template is available on the intranet under HR > Brand Guidelines.
+
+Q: How do I share files securely with external parties?
+A: Use the company-approved SharePoint external sharing feature or the secure file transfer portal at files.company.com. Do not use personal cloud storage services like personal Google Drive or Dropbox for company files. For large files, contact IT for a secure transfer link.
+
+Q: My internet connection at the office is very slow. Who do I contact?
+A: First try disconnecting from any unnecessary applications or video calls. Restart your network adapter by disabling and re-enabling it in Settings > Network. If the issue affects multiple people in your area, contact IT immediately as it may be a network infrastructure issue.
+
+Q: How do I unlock my account after too many failed login attempts?
+A: Your account locks automatically after 5 failed password attempts. Wait 30 minutes for it to auto-unlock, or contact IT helpdesk directly at it-support@company.com or ext. 5555 for immediate assistance. IT can unlock it remotely within minutes.
+
+Q: How do I join a Microsoft Teams meeting?
+A: Click the meeting link in your calendar invite or email. If you have Teams installed, it will open automatically. You can also join via browser by clicking "Join on the web". Make sure your microphone and camera are working before joining.
+
+Q: How do I report a data breach or security incident?
+A: Immediately contact the IT Security team at security@company.com or call the security hotline at ext. 9999. Do not attempt to investigate or resolve the breach yourself. Preserve all evidence including emails, screenshots, and logs. Time is critical in security incidents.
+
+Q: How do I change my Windows login PIN?
+A: Go to Settings > Accounts > Sign-in options. Under PIN, click Change. Enter your current PIN, then enter and confirm your new PIN. Your PIN must be at least 6 digits. If you have forgotten your PIN, contact IT to reset it.
+
+Q: How do I backup my work files?
+A: All files saved to your OneDrive or company SharePoint are automatically backed up. For local files on your desktop or Documents folder, ensure OneDrive sync is enabled — look for the OneDrive cloud icon in the taskbar. IT recommends saving all important files to OneDrive rather than local storage.
+
+Q: What are the IT helpdesk operating hours?
+A: The IT helpdesk is available Monday to Friday, 8:00 AM to 6:00 PM. For after-hours urgent issues, call the emergency line at ext. 9000. Non-urgent issues submitted outside office hours will be handled on the next business day.
+
+Q: How do I transfer my files to a new computer?
+A: If your files are synced to OneDrive, simply sign in on your new computer and they will sync automatically. For local files, IT will assist with the data migration during the device setup appointment. Submit a device migration request through the IT portal.
+
+Q: How do I enable dark mode on Windows?
+A: Go to Settings > Personalization > Colors. Under Choose your mode, select Dark. This changes the Windows interface to dark mode. Individual applications like Outlook and Teams have their own dark mode settings under their respective settings menus.
+
+Q: My keyboard or mouse is not working. What should I do?
+A: Check that the device is properly connected or that the USB receiver is plugged in. For wireless devices, check the battery. Try plugging into a different USB port. If the device still does not work, contact IT for a replacement. We keep spare peripherals in stock.
+
+Q: How do I set up remote desktop to access my work computer from home?
+A: Connect to the VPN first. Then open Remote Desktop Connection on your home computer and enter your work computer name (found in Settings > System > About). Use your employee credentials to log in. Contact IT if you need your computer name or if remote desktop is not enabled.
+
+Q: How do I clear my browser cache?
+A: In Chrome press Ctrl+Shift+Delete. Select All time as the time range. Check Cached images and files and Cookies and other site data. Click Clear data. For Edge the shortcut is the same. Clearing cache often resolves website loading issues.
+
+Q: Can I use personal devices to access company systems?
+A: Yes, through the BYOD (Bring Your Own Device) program. Your personal device must be enrolled in the company Mobile Device Management system. Contact IT to enroll your device. Note that IT may enforce security policies on enrolled personal devices.
+
+Q: How do I submit an IT support ticket?
+A: Visit the IT portal at it-portal.company.com and click Submit a Ticket. Fill in the category, priority, description, and any screenshots. You will receive a ticket number by email. You can track progress at any time through the portal.
