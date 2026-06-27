@@ -1,23 +1,14 @@
-"""
-Cases management routes — staff resolves escalated cases, triggering AutoLearnNode.
-"""
-
 from datetime import datetime, timezone
-
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-
 from app.database.db import get_db
 from app.models.case import Case
 from app.routes.workflow import WorkflowState, auto_learn_node
 
 router = APIRouter()
 
-
-# ---------------------------------------------------------------------------
 # Pydantic schemas
-# ---------------------------------------------------------------------------
 class CaseOut(BaseModel):
     id: int
     original_question: str
@@ -37,13 +28,10 @@ class CaseOut(BaseModel):
 
 
 class ResolveRequest(BaseModel):
-    resolution: str             # staff-provided answer
-    learn: bool = True          # whether to write it back to om_faq.txt
+    resolution: str
+    learn: bool = True
 
-
-# ---------------------------------------------------------------------------
 # Routes
-# ---------------------------------------------------------------------------
 @router.get("/cases", response_model=list[CaseOut])
 def list_cases(status: str | None = None, db: Session = Depends(get_db)):
     """Return all cases, optionally filtered by status (open / resolved)."""
@@ -78,7 +66,7 @@ def resolve_case(case_id: int, body: ResolveRequest, db: Session = Depends(get_d
     case.status = "resolved"
     case.resolved_at = datetime.now(timezone.utc)
 
-    # ── AutoLearnNode (Node 5b) ──────────────────────────────────────────────
+    #AutoLearnNode (Node 5b)
     if body.learn and case.original_question:
         state = WorkflowState()
         auto_learn_node(

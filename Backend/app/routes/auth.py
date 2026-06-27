@@ -21,10 +21,7 @@ from app.models.user import User
 
 router = APIRouter()
 
-# ---------------------------------------------------------------------------
 # Simple password hashing using stdlib (no extra deps)
-# Uses PBKDF2-HMAC-SHA256 — secure enough for a university project
-# ---------------------------------------------------------------------------
 def _hash_password(password: str) -> str:
     salt = secrets.token_hex(16)
     key  = hashlib.pbkdf2_hmac("sha256", password.encode(), salt.encode(), 260000)
@@ -40,9 +37,7 @@ def _verify_password(password: str, stored: str) -> bool:
         return False
 
 
-# ---------------------------------------------------------------------------
-# Seed default accounts (called on startup)
-# ---------------------------------------------------------------------------
+# Seed default accounts
 def seed_default_users(db: Session):
     """
     Creates default accounts if they don't exist yet.
@@ -64,10 +59,7 @@ def seed_default_users(db: Session):
             ))
     db.commit()
 
-
-# ---------------------------------------------------------------------------
 # Pydantic schemas
-# ---------------------------------------------------------------------------
 class LoginRequest(BaseModel):
     username: str
     password: str
@@ -86,11 +78,8 @@ class UserOut(BaseModel):
     role:     str
     model_config = {"from_attributes": True}
 
-
-# ---------------------------------------------------------------------------
 # Routes
-# ---------------------------------------------------------------------------
-ADMIN_SECRET = os.getenv("ADMIN_SECRET", "supersecret123")   # set in .env for production
+ADMIN_SECRET = os.getenv("ADMIN_SECRET", "")
 
 
 @router.post("/auth/login", response_model=UserOut)

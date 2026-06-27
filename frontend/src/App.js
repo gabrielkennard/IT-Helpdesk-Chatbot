@@ -10,7 +10,6 @@ export default function App() {
 
   const handleLogin = (userData) => {
     setUser(userData);
-    // Route by role: staff/admin go to cases dashboard, users go to chat
     setPage(userData.role === "user" ? "chat" : "cases");
   };
 

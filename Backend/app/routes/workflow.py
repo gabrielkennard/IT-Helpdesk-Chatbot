@@ -32,13 +32,11 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ---------------------------------------------------------------------------
 # Configuration
-# ---------------------------------------------------------------------------
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 KB_PATH        = os.getenv("KB_PATH", "./knowledge_base/om_faq.txt")
 GEMINI_MODEL   = "gemini-2.0-flash-lite"
-GEMINI_TIMEOUT = 15   # seconds — fail fast, fallback kicks in
+GEMINI_TIMEOUT = 15   #seconds
 
 HIGH_CONFIDENCE   = 0.75
 MEDIUM_CONFIDENCE = 0.55
@@ -51,9 +49,7 @@ GEMINI_URL = (
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 groq_client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
-# ---------------------------------------------------------------------------
-# Gemini helper — uses stdlib urllib so no SDK timeout issue
-# ---------------------------------------------------------------------------
+# Gemini helper
 def _call_gemini(prompt: str) -> str:
     """
     Calls Groq API (Llama 3) — fast, free, no SSL issues.
@@ -69,45 +65,39 @@ def _call_gemini(prompt: str) -> str:
     )
     return response.choices[0].message.content.strip()
 
-
-# ---------------------------------------------------------------------------
 # Shared Workflow State
-# ---------------------------------------------------------------------------
 @dataclass
 class WorkflowState:
-    # ── Inputs ──────────────────────────────────────────────────────────────
+    # Inputs
     user_question: str = ""
     db: Optional[object] = None
 
-    # ── Node 1 outputs ──────────────────────────────────────────────────────
+    # Node 1 outputs
     rewritten_question: str = ""
     keywords: list[str] = field(default_factory=list)
 
-    # ── Node 2 outputs ──────────────────────────────────────────────────────
+    # Node 2 outputs
     best_match_question: str = ""
     best_match_answer:   str = ""
     raw_score:           float = 0.0
 
-    # ── Node 3 outputs ──────────────────────────────────────────────────────
+    # Node 3 outputs
     confidence_score: float = 0.0
     confidence_level: str   = "low"      # "high" | "medium" | "low"
     route:            str   = "escalate" # "generate" | "escalate"
 
-    # ── Node 4a / 4b outputs ────────────────────────────────────────────────
+    # Node 4a / 4b outputs
     final_answer: str = ""
 
-    # ── Node 5a / 5b outputs ────────────────────────────────────────────────
+    # Node 5a / 5b outputs
     case_id: Optional[int] = None
     learned: bool = False
 
-    # ── Meta ────────────────────────────────────────────────────────────────
+    # Meta
     errors:     list[str] = field(default_factory=list)
     node_trace: list[str] = field(default_factory=list)
 
-
-# ---------------------------------------------------------------------------
 # Node 1 — QueryRewriterNode
-# ---------------------------------------------------------------------------
 def query_rewriter_node(state: WorkflowState) -> WorkflowState:
     """
     Gemini API call #1 (15s timeout):
@@ -166,10 +156,7 @@ def _simple_keywords(text: str) -> list[str]:
     tokens = re.findall(r"\b[a-zA-Z]{3,}\b", text.lower())
     return [t for t in tokens if t not in stopwords][:6]
 
-
-# ---------------------------------------------------------------------------
 # Node 2 — KBSearchNode
-# ---------------------------------------------------------------------------
 def kb_search_node(state: WorkflowState) -> WorkflowState:
     """
     Reads om_faq.txt directly.
@@ -232,10 +219,7 @@ def _parse_faq(path: str) -> list[tuple[str, str]]:
         entries.append((current_q, " ".join(current_a_lines).strip()))
     return entries
 
-
-# ---------------------------------------------------------------------------
 # Node 3 — ConfidenceGateNode
-# ---------------------------------------------------------------------------
 def confidence_gate_node(state: WorkflowState) -> WorkflowState:
     state.node_trace.append("ConfidenceGateNode")
     normalised = min(state.raw_score, 1.0)
@@ -255,10 +239,7 @@ def confidence_gate_node(state: WorkflowState) -> WorkflowState:
                 normalised, state.confidence_level, state.route)
     return state
 
-
-# ---------------------------------------------------------------------------
 # Node 4a — EscalateNode
-# ---------------------------------------------------------------------------
 def escalate_node(state: WorkflowState) -> WorkflowState:
     state.node_trace.append("EscalateNode")
     logger.info("[Node 4a] EscalateNode — escalating to human agent")
@@ -273,10 +254,7 @@ def escalate_node(state: WorkflowState) -> WorkflowState:
     )
     return state
 
-
-# ---------------------------------------------------------------------------
 # Node 4b — GenerateNode
-# ---------------------------------------------------------------------------
 def generate_node(state: WorkflowState) -> WorkflowState:
     """
     Gemini API call #2 (15s timeout, completely different prompt from Node 1).
@@ -315,10 +293,7 @@ Write a helpful, clear, and friendly response to the user based on the knowledge
 
     return state
 
-
-# ---------------------------------------------------------------------------
 # Node 5a — LogCaseNode
-# ---------------------------------------------------------------------------
 def log_case_node(state: WorkflowState) -> WorkflowState:
     state.node_trace.append("LogCaseNode")
     logger.info("[Node 5a] LogCaseNode — writing case to DB")
@@ -350,10 +325,7 @@ def log_case_node(state: WorkflowState) -> WorkflowState:
 
     return state
 
-
-# ---------------------------------------------------------------------------
 # Node 5b — AutoLearnNode
-# ---------------------------------------------------------------------------
 def auto_learn_node(state: WorkflowState, new_question: str, new_answer: str) -> WorkflowState:
     state.node_trace.append("AutoLearnNode")
     logger.info("[Node 5b] AutoLearnNode — writing new Q&A to KB")
@@ -370,10 +342,7 @@ def auto_learn_node(state: WorkflowState, new_question: str, new_answer: str) ->
 
     return state
 
-
-# ---------------------------------------------------------------------------
 # Workflow Orchestrator
-# ---------------------------------------------------------------------------
 def run_workflow(user_question: str, db: Session) -> WorkflowState:
     """
     Executes the full 7-node pipeline with conditional edges.

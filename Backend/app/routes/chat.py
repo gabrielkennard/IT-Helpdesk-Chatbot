@@ -1,11 +1,6 @@
-"""
-POST /api/chat  — thin route that calls the workflow engine and returns the result.
-"""
-
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-
 from app.database.db import get_db
 from app.routes.workflow import run_workflow
 

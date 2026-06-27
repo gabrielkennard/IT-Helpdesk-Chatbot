@@ -16,7 +16,6 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# ── CORS ───────────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -28,13 +27,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ── Routers ─────────────────────────────────────────────────────────────────
+#Routers
 app.include_router(chat_router,  prefix="/api", tags=["Chat"])
 app.include_router(cases_router, prefix="/api", tags=["Cases"])
 app.include_router(auth_router,  prefix="/api", tags=["Auth"])
 
 
-# ── Startup ─────────────────────────────────────────────────────────────────
+#Startup
 @app.on_event("startup")
 def startup_event():
     init_db()
