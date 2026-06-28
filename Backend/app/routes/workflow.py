@@ -51,10 +51,6 @@ groq_client = Groq(api_key=GROQ_API_KEY) if GROQ_API_KEY else None
 
 # Gemini helper
 def _call_gemini(prompt: str) -> str:
-    """
-    Calls Groq API (Llama 3) — fast, free, no SSL issues.
-    Falls back gracefully if unavailable.
-    """
     if not groq_client:
         raise Exception("No GROQ_API_KEY set")
 
@@ -99,11 +95,6 @@ class WorkflowState:
 
 # Node 1 — QueryRewriterNode
 def query_rewriter_node(state: WorkflowState) -> WorkflowState:
-    """
-    Gemini API call #1 (15s timeout):
-    Rewrites question into a clear searchable form + extracts keywords.
-    Falls back to original question if API fails — system never crashes.
-    """
     state.node_trace.append("QueryRewriterNode")
     logger.info("[Node 1] QueryRewriterNode — rewriting: %r", state.user_question)
 
@@ -158,10 +149,7 @@ def _simple_keywords(text: str) -> list[str]:
 
 # Node 2 — KBSearchNode
 def kb_search_node(state: WorkflowState) -> WorkflowState:
-    """
-    Reads om_faq.txt directly.
-    Scores each Q&A entry using fuzzy ratio + keyword overlap bonus.
-    """
+    #Reads om_faq.txt directly.
     state.node_trace.append("KBSearchNode")
     logger.info("[Node 2] KBSearchNode — searching KB")
 
@@ -256,12 +244,8 @@ def escalate_node(state: WorkflowState) -> WorkflowState:
 
 # Node 4b — GenerateNode
 def generate_node(state: WorkflowState) -> WorkflowState:
-    """
-    Gemini API call #2 (15s timeout, completely different prompt from Node 1).
-    Falls back to raw KB answer if API fails.
-    """
     state.node_trace.append("GenerateNode")
-    logger.info("[Node 4b] GenerateNode — generating answer with Gemini")
+    logger.info("[Node 4b] GenerateNode — generating answer with Groq")
 
     if not GEMINI_API_KEY:
         state.final_answer = state.best_match_answer
@@ -346,7 +330,6 @@ def auto_learn_node(state: WorkflowState, new_question: str, new_answer: str) ->
 def run_workflow(user_question: str, db: Session) -> WorkflowState:
     """
     Executes the full 7-node pipeline with conditional edges.
-
     Graph:
       Node1 → Node2 → Node3 ─┬─(confidence≥0.35)→ Node4b
                               └─(confidence<0.35) → Node4a → Node5a

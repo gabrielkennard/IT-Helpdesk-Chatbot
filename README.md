@@ -68,7 +68,7 @@ User Question
 | Layer | Technology |
 |---|---|
 | LLM | Groq — Llama 3.3 70B (`llama-3.3-70b-versatile`) |
-| Backend | Python 3.11+, FastAPI, SQLAlchemy, SQLite |
+| Backend | Python 3.14, FastAPI, SQLAlchemy, SQLite |
 | Frontend | React 18, no UI library (pure inline styles) |
 | Auth | PBKDF2-HMAC-SHA256 password hashing (stdlib only) |
 | KB Search | Python `difflib.SequenceMatcher` + keyword overlap |
@@ -114,7 +114,7 @@ IT-Helpdesk-Chatbot/
 ## Setup
 
 ### Prerequisites
-- Python 3.11+
+- Python 3.14
 - Node.js 18+
 - Free Groq API key: https://console.groq.com
 - (Optional) Free Gemini API key: https://aistudio.google.com/apikey
